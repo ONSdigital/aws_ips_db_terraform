@@ -1,5 +1,4 @@
-This repository creates a VPC for IPS' ECS Cluster on AWS
-
+This repository creates a VPC for IPS' persistent database on AWS.
 
 When invoking `tf apply` the following params needs to be passed in:
 
