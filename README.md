@@ -21,9 +21,9 @@ aws_secret_key = "redacted"
 For instance, the following command uses a combination of both the approaches, by specifying vars that may change on the command line directly and moving the
 vars that contains sensitive information to the .tfvars file so that they do not end up in the shell history:
 ```
-tf plan \
+terraform plan \
     -var "bastion_ingress_ip=$(curl --silent  ifconfig.co)" \
     -var "deploy_key_name=ConcDeploy"  \
-    -var "common_name=ips-vpc-test2"   \
+    -var "common_name=tf"   \
     -var-file=$HOME/.aws/tf-creds.tfvars 
 ```

@@ -15,7 +15,7 @@ resource "aws_subnet" "private_subnets" {
   tags = merge(
     local.private_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Private-Subnet-${count.index}"
+      "Name" = "${local.common_name_prefix}-private-subnet-${count.index}"
     },
   )
 }
@@ -26,7 +26,7 @@ resource "aws_route_table" "route_tbl_private" {
   tags = merge(
     local.private_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Private-RTB"
+      "Name" = "${local.common_name_prefix}-private-rtb"
     },
   )
 }
@@ -49,7 +49,7 @@ resource "aws_security_group" "private_sg" {
   tags = merge(
     local.private_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Private-SG"
+      "Name" = "${local.common_name_prefix}-private-sg"
     },
   )
 }

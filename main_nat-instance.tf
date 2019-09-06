@@ -3,38 +3,32 @@ resource "aws_security_group" "natsg" {
   name        = "${local.common_name_prefix}_NAT-security-group"
   description = "Security Group for the NAT Instance for ${local.common_name_prefix}"
 
+//  TODO: Someone needs to review this!
   ingress {
-    from_port   = 53
-    protocol    = "udp"
-    to_port     = 53
-    cidr_blocks = aws_subnet.private_subnets.*.cidr_block
-  }
-
-//  ingress {
-//    from_port   = 0
-//    protocol    = "tcp"
-//    to_port     = 65535
-//    security_groups = [aws_security_group.ui_sg.id]
-//  }
-//
-//  ingress {
-//    from_port   = 0
-//    protocol    = "tcp"
-//    to_port     = 65535
-//    security_groups = [aws_security_group.ips_servs_sg.id]
-//  }
-
-  ingress {
-    from_port = 22
+    from_port = 80
     protocol  = "tcp"
-    to_port   = 22
-    cidr_blocks = [local.bastion_ingress_cidr]
+    to_port   = 80
+    self      = true
   }
 
   ingress {
     from_port = 0
     protocol  = -1
     to_port   = 0
+    self      = true
+  }
+
+  ingress {
+    from_port = 22
+    protocol  = "tcp"
+    to_port   = 22
+    self      = true
+  }
+
+  ingress {
+    from_port   = 53
+    protocol    = "udp"
+    to_port     = 53
     self      = true
   }
 
@@ -60,19 +54,16 @@ resource "aws_security_group" "natsg" {
   }
 
   egress {
-    from_port = 3306
-    protocol  = "tcp"
-    to_port   = 3306
-    cidr_blocks = concat(
-      aws_subnet.private_subnets.*.cidr_block,
-      aws_subnet.public_subnets.*.cidr_block,
-    )
+    from_port   = 22
+    protocol    = "tcp"
+    to_port     = 22
+    self        = true
   }
 
   tags = merge(
     local.module_common_tags,
     {
-      "Name" = "${local.common_name_prefix}_NAT-Instance-SG"
+      "Name" = "${local.common_name_prefix}-nat-instance-sg-db"
     },
   )
 }
@@ -90,7 +81,7 @@ resource "aws_instance" "nat" {
   tags = merge(
     local.module_common_tags,
     {
-      "Name" = "${local.common_name_prefix}_NAT-Instance"
+      "Name" = "${local.common_name_prefix}-nat-instance-db"
     },
   )
 }

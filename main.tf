@@ -18,7 +18,7 @@ resource "aws_default_security_group" "main_vpc_default_sg" {
   tags = merge(
     local.module_common_tags,
     {
-      "Name" = "${local.common_name_prefix}_Default-SG"
+      "Name" = "${local.common_name_prefix}-default-sg"
     },
   )
 }
@@ -28,7 +28,7 @@ resource "aws_internet_gateway" "igw" {
   tags = merge(
     local.public_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Internet-Gateway"
+      "Name" = "${local.common_name_prefix}-internet-gateway"
     },
   )
 }

@@ -9,7 +9,7 @@ resource "aws_subnet" "public_subnets" {
   tags = merge(
     local.public_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Public-Subnet-${count.index}"
+      "Name" = "${local.common_name_prefix}-public-subnet-${count.index}"
     },
   )
 }
@@ -19,7 +19,7 @@ resource "aws_route_table" "route_tbl_public" {
   tags = merge(
     local.public_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Public-RTB"
+      "Name" = "${local.common_name_prefix}-public-rtb"
     },
   )
 }
@@ -33,7 +33,7 @@ resource "aws_route" "public_subnet_route" {
 resource "aws_route_table_association" "route_tbl_assoc_public" {
   count          = length(aws_subnet.public_subnets)
   route_table_id = aws_route_table.route_tbl_public.id
-  subnet_id      = "${element(aws_subnet.public_subnets.*.id, count.index)} "
+  subnet_id      = "${element(aws_subnet.public_subnets.*.id, count.index)}"
 }
 
 resource "aws_security_group" "public_sg" {
@@ -42,7 +42,7 @@ resource "aws_security_group" "public_sg" {
   tags = merge(
     local.public_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}_Public-SG"
+      "Name" = "${local.common_name_prefix}_public-sg"
     },
   )
 }
