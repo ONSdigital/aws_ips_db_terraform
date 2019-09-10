@@ -3,7 +3,7 @@ variable "main_address_space" {
 }
 
 variable "public_subnet_count" {
-  default = 2
+  default = 1
 }
 
 variable "private_subnet_count" {
