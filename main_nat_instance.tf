@@ -4,16 +4,16 @@ resource "aws_security_group" "natsg" {
   description = "Security Group for the NAT Instance for ${local.common_name_prefix}"
 
   ingress {
-    from_port = 0
-    protocol  = -1
-    to_port   = 0
+    from_port   = 0
+    protocol    = -1
+    to_port     = 0
     cidr_blocks = aws_subnet.private_subnets.*.cidr_block
   }
 
   ingress {
-    from_port = 22
-    protocol  = "tcp"
-    to_port   = 22
+    from_port   = 22
+    protocol    = "tcp"
+    to_port     = 22
     cidr_blocks = [local.bastion_ingress_cidr]
   }
 
@@ -25,9 +25,9 @@ resource "aws_security_group" "natsg" {
   }
 
   egress {
-    from_port = 0
-    protocol  = -1
-    to_port   = 0
+    from_port   = 0
+    protocol    = -1
+    to_port     = 0
     cidr_blocks = [var.cidr_block_all]
   }
 
