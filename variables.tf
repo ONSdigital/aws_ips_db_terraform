@@ -34,3 +34,13 @@ variable db_password {
 }
 variable db_user_name {
 }
+
+variable instance_class {
+  type    = "string"
+  default = "db.t2.micro"
+}
+
+variable parameter_group_name {
+  type    = "string"
+  default = "ips-mysql"
+}

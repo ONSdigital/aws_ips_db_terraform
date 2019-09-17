@@ -48,16 +48,15 @@ resource "aws_db_instance" "default" {
   storage_type      = "gp2"
   engine            = "mysql"
   engine_version    = "5.7"
-  instance_class    = "db.t2.micro"
+  instance_class    = var.instance_class
 
   name       = local.common_name_prefix
   identifier = local.common_name_prefix
 
-
   username = var.db_user_name
   password = var.db_password
 
-  parameter_group_name = "ips-mysql"
+  parameter_group_name = var.parameter_group_name
 
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name   = aws_db_subnet_group.db-subnet.name
