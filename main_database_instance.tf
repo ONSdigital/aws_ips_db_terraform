@@ -1,3 +1,17 @@
+locals {
+  db_name_from_arg = local.common_name_prefix
+
+  # RDS DB Identifier only allows Alpha numeric and hyphens
+  sanitize_for_db_identifier       = replace(local.db_name_from_arg, "/[^[0-9A-Za-z\\-]]/", "-")
+  truncate_length_of_db_identifier = substr(local.sanitize_for_db_identifier, 0, 63)
+  db_identifier                    = local.truncate_length_of_db_identifier
+
+  # RDS DB Name only allows Alpha numeric and underscores
+  sanitize_for_db_name       = replace(local.db_name_from_arg, "/\\W/", "_") #  Replace \W ( matches anything except [0-9A-Za-z_]) with a underscore
+  truncate_length_of_db_name = substr(local.sanitize_for_db_name, 0, 63)
+  db_name                    = local.truncate_length_of_db_name
+}
+
 resource "aws_db_subnet_group" "db-subnet" {
   name       = "ips-db-subnet"
   subnet_ids = aws_subnet.private_subnets.*.id
@@ -50,8 +64,8 @@ resource "aws_db_instance" "default" {
   engine_version    = "5.7"
   instance_class    = var.instance_class
 
-  name       = local.common_name_prefix
-  identifier = local.common_name_prefix
+  name       = local.db_name
+  identifier = local.db_identifier
 
   username = var.db_user_name
   password = var.db_password
@@ -60,6 +74,8 @@ resource "aws_db_instance" "default" {
 
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name   = aws_db_subnet_group.db-subnet.name
+
+  skip_final_snapshot = true
 
   tags = merge(
     local.module_common_tags,
