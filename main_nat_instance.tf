@@ -3,12 +3,18 @@ resource "aws_security_group" "natsg" {
   name        = "${local.common_name_prefix}_NAT-security-group"
   description = "Security Group for the NAT Instance for ${local.common_name_prefix}"
 
-//  TODO: I have not replicated ingress and egress for SSH (have not created a bastion) or HTTPS (this will be done last)
   ingress {
-    from_port = 80
-    protocol  = "tcp"
-    to_port   = 80
+    from_port = 0
+    protocol  = -1
+    to_port   = 0
     cidr_blocks = aws_subnet.private_subnets.*.cidr_block
+  }
+
+  ingress {
+    from_port = 22
+    protocol  = "tcp"
+    to_port   = 22
+    cidr_blocks = [local.bastion_ingress_cidr]
   }
 
   ingress {
@@ -18,48 +24,10 @@ resource "aws_security_group" "natsg" {
     self      = true
   }
 
-  ingress {
-    from_port = 53
-    protocol  = "udp"
-    to_port   = 53
-    cidr_blocks = aws_subnet.private_subnets.*.cidr_block
-  }
-
-  ingress {
-    from_port = 2222
-    protocol  = "tcp"
-    to_port   = 2222
-    cidr_blocks = aws_subnet.private_subnets.*.cidr_block
-  }
-
   egress {
-    from_port   = 80
-    protocol    = "tcp"
-    to_port     = 80
-    cidr_blocks = [var.cidr_block_all]
-  }
-
-  egress {
-    from_port   = 5432
-    protocol    = "tcp"
-    to_port     = 5432
-    cidr_blocks = concat(
-      aws_subnet.private_subnets.*.cidr_block,
-      aws_subnet.public_subnets.*.cidr_block,
-    )
-  }
-
-  egress {
-    from_port   = 53
-    protocol    = "udp"
-    to_port     = 53
-    cidr_blocks = [var.cidr_block_all]
-  }
-
-  egress {
-    from_port   = 2222
-    protocol    = "tcp"
-    to_port     = 2222
+    from_port = 0
+    protocol  = -1
+    to_port   = 0
     cidr_blocks = [var.cidr_block_all]
   }
 
