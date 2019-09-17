@@ -13,16 +13,6 @@ resource "aws_vpc" "main_vpc" {
   tags = local.module_common_tags
 }
 
-resource "aws_default_security_group" "main_vpc_default_sg" {
-  vpc_id = aws_vpc.main_vpc.id
-  tags = merge(
-    local.module_common_tags,
-    {
-      "Name" = "${local.common_name_prefix}-default-sg"
-    },
-  )
-}
-
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main_vpc.id
   tags = merge(

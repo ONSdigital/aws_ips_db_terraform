@@ -30,5 +30,3 @@ variable "aws_secret_key" {
 variable "common_name" {
 }
 
-variable "arn_certificate" {
-}
