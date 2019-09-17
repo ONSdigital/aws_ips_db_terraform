@@ -17,12 +17,4 @@ data "aws_ami" "nat_instance_ami" {
 data "aws_availability_zones" "available" {
 }
 
-data "terraform_remote_state" "network" {
-  backend = "s3"
-  config = {
-    bucket = "ips-vpc-s3"
-    key    = "global/s3/terraform.tfstate"
-    region = "eu-west-2"
-  }
-}
 
