@@ -13,7 +13,8 @@ resource "aws_security_group" "db-sg" {
   tags = merge(
     local.private_vpc_resource_tags,
     {
-      "Name" = "${local.common_name_prefix}-db-sg"
+      "Name"      = "${local.common_name_prefix}-db-sg"
+      "FilterKey" = "${local.common_name_prefix}-DB-Security-Group"
     },
   )
 }
