@@ -34,7 +34,7 @@ resource "aws_route_table" "route_tbl_private" {
 resource "aws_route" "private_subnet_route" {
   route_table_id         = aws_route_table.route_tbl_private.id
   destination_cidr_block = var.cidr_block_all
-  instance_id            = aws_instance.nat.id
+  instance_id            = aws_instance.bastion.id
 }
 
 resource "aws_route_table_association" "route_tbl_assoc_private" {
