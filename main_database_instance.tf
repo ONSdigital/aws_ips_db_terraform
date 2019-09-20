@@ -45,13 +45,13 @@ resource "aws_security_group_rule" "db_sg_self" {
   security_group_id = aws_security_group.db-sg.id
 }
 
-resource "aws_security_group_rule" "db_sg_from_nat" {
+resource "aws_security_group_rule" "db_sg_from_bastion" {
   from_port = 0
   protocol  = -1
   to_port   = 0
   type      = "ingress"
   // traffic from:
-  source_security_group_id = aws_security_group.natsg.id
+  source_security_group_id = aws_security_group.bastion_sg.id
 
   // rules associated with security group:
   security_group_id = aws_security_group.db-sg.id
