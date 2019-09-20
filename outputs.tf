@@ -46,22 +46,22 @@ output "aws_route_table_associaton_private" {
   value = aws_route_table_association.route_tbl_assoc_private.*.id
 }
 
-output "nat_instance_id" {
-  value = aws_instance.nat.id
+output "bastion_instance_id" {
+  value = aws_instance.bastion.id
 }
 
-output "nat_private_ip" {
-  value = aws_instance.nat.private_ip
+output "bastion_private_ip" {
+  value = aws_instance.bastion.private_ip
 }
 
-output "nat_public_ip" {
-  value = aws_instance.nat.public_ip
+output "basiton_public_ip" {
+  value = aws_instance.bastion.public_ip
 }
 
-output "nat_public_dns" {
-  value = aws_instance.nat.public_dns
+output "bastion_public_dns" {
+  value = aws_instance.bastion.public_dns
 }
 
-output "nat_sg_id" {
-  value = aws_security_group.natsg.id
+output "bastion_sg_id" {
+  value = aws_security_group.bastion_sg.id
 }
