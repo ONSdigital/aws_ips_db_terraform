@@ -33,7 +33,6 @@ resource "aws_security_group" "db-sg" {
   )
 }
 
-
 resource "aws_security_group_rule" "db_sg_self" {
   from_port = 0
   protocol  = -1
@@ -52,6 +51,17 @@ resource "aws_security_group_rule" "db_sg_from_bastion" {
   type      = "ingress"
   // traffic from:
   source_security_group_id = aws_security_group.bastion_sg.id
+
+  // rules associated with security group:
+  security_group_id = aws_security_group.db-sg.id
+}
+
+resource "aws_security_group_rule" "db_sg_egress_all" {
+  from_port = 0
+  protocol  = -1
+  to_port   = 0
+  type      = "egress"
+  cidr_blocks = [var.cidr_block_all]
 
   // rules associated with security group:
   security_group_id = aws_security_group.db-sg.id
