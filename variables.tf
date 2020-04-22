@@ -37,7 +37,7 @@ variable db_user_name {
 
 variable instance_class {
   type    = "string"
-  default = "db.t3.meduim"
+  default = "db.t3.medium"
 }
 
 variable parameter_group_name {
