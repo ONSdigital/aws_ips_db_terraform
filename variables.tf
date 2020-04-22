@@ -1,5 +1,5 @@
 variable "main_address_space" {
-  default = "10.1.0.0/16"
+  default = "10.31.0.0/16"
 }
 
 variable "public_subnet_count" {
@@ -37,7 +37,7 @@ variable db_user_name {
 
 variable instance_class {
   type    = "string"
-  default = "db.t2.micro"
+  default = "db.t3.meduim"
 }
 
 variable parameter_group_name {
