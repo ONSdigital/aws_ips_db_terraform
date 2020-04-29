@@ -80,7 +80,7 @@ resource "aws_db_instance" "default" {
   username = var.db_user_name
   password = var.db_password
 
-  parameter_group_name = var.parameter_group_name
+  parameter_group_name = "${aws_db_parameter_group.database.name}"
 
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name   = aws_db_subnet_group.db-subnet.name
@@ -93,4 +93,9 @@ resource "aws_db_instance" "default" {
       "Name" = local.common_name_prefix
     },
   )
+}
+
+resource "aws_db_parameter_group" "database" {
+  name   = var.parameter_group_name
+  family = "mysql5.7"
 }
